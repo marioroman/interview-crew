@@ -1,6 +1,17 @@
+company_research_task:
+  description: >
+    Research {company} for recent projects, financials, and news using available sources.
+  expected_output: >
+    A concise report with three sections:
+    - Recent Projects (bulleted list)
+    - Financials (summary and key figures)
+    - News (recent headlines and summaries)
+  agent: company_research
+  output_file: output/company_profile.md
+
 people_background_research_interviewee_task:
   description: >
-    Conduct thorough research of {interviewee_name}, his/her linkedin profile is {interviewee_linkedin_profile}. Focus on:
+    Research {interviewee_name} using their LinkedIn profile ({interviewee_linkedin_profile}) and any available tools. Focus on:
     1. background
     2. experience
     3. skills
@@ -8,59 +19,62 @@ people_background_research_interviewee_task:
     5. weaknesses
     6. strengths
     7. goals
-    Use the tools provided to research the background of {interviewee_name}
-    Make sure to organize your findings in a structured format with clear sections
+
+    Organize findings in a structured, sectioned format.
   expected_output: >
-    A well structured technical competency report including:
-    - A list of {interviewee_name} background
-    - A list of {interviewee_name} experience
-    - A list of {interviewee_name} skills
-    - A list of {interviewee_name} achievements
-    - A list of {interviewee_name} weaknesses
-    - A list of {interviewee_name} strengths
+    A structured report with clearly labeled sections:
+    - Background
+    - Experience
+    - Skills
+    - Achievements
+    - Weaknesses
+    - Strengths
+    - Goals
+    Each section should be a concise, bulleted list.
   agent: people_background_research
   output_file: output/interviewee_profile_{interviewee_name}.md
 
 people_background_research_interviewer_task:
   description: >
-    Conduct thorough research of {interviewer_name}, his/her linkedin profile is {interviewer_linkedin_profile}. Focus on:
-    1. Professional career
-    2. Technical expertise, like programming languages, frameworks, tools, etc.
-    3. Leadership style, like management style, decision-making patterns, etc.
-    4. Historical hiring decisions
-    5. Company values, vision, mission, and culture
-    6. Company's engineering culture, practices, and tools
-  
+    Research {interviewer_name} using their LinkedIn profile ({interviewer_linkedin_profile}) and available tools. Focus on:
+    - Professional career
+    - Technical expertise (languages, frameworks, tools)
+    - Leadership style (management, decision-making)
+    - Historical hiring decisions
+    - Company values, vision, mission, and culture
+    - Company's engineering culture, practices, and tools
+
     Analyze {company} values, vision, mission, and culture.
     Use tools provided to research the background of the {interviewer_name}
   expected_output: >
-    A well structured report containing:
-    - A list of {interviewer_name} background
-    - A list of {interviewer_name} technical expertise
-    - A list of {interviewer_name} leadership style
-    - A list of {interviewer_name} historical hiring decisions
-    - A list of {interviewer_name} company values, vision, mission, and culture
-    - A list of {interviewer_name} company's engineering culture, practices, and tools
+    A structured report with the following sections:
+    - {interviewer_name} Background
+    - Technical Expertise
+    - Leadership Style
+    - Historical Hiring Decisions
+    - Company Values, Vision, Mission, and Culture
+    - Engineering Culture, Practices, and Tools
+    Use bullet points for each section.
   agent: people_background_research
   output_file: output/interviewer_profile_{interviewer_name}.md
 
 interviewee_task:
   description: >
-    Prepare a technical and leadership interview material to be used in an interview for role {role} at {company}
-    All the information you need is provided in the context.
-    Use the tools provided to research any missing information.
-    Material should be aligned with the interviewer's profile and the company's values, vision, mission, and culture and Company interview process and expectations.
+    Prepare technical and leadership interview materials for the {role} role at {company}. Use the provided context and research tools as needed. Align materials with the interviewer's profile and the company's values, vision, mission, and engineering culture.
   expected_output: >
-    A well structured technical and leadership interview material including:
-    - A list of {company} values, vision, mission, and culture
-    - A detailed {interviewer_name} information
-    - A list of questions that the interviewer may ask
-    - A list of advices to the {interviewee_name} to prepare for the interview according to the {interviewer_name} profile and the company's values, vision, mission, and culture
-    - A list with bullet points of why you are a good fit for the {role} at {company}
-    - A list with bullet points of why you are not a good fit for the {role} at {company}
-    - Relevant information about the company's engineering culture, practices, and tools including articles, blog posts, news, etc.
+    A structured document including:
+    - {company} values, vision, mission, and culture (bulleted list)
+    - Detailed {interviewer_name} profile (bulleted list)
+    - Sample questions the interviewer may ask (bulleted list)
+    - Advice for {interviewee_name} to prepare, tailored to the interviewer and company culture (bulleted list)
+    - Bullet points: why you are a good fit for {role} at {company}
+    - Bullet points: why you may not be a good fit for {role} at {company}
+    - Relevant information about the company's engineering culture, practices, and tools (with links to articles, blog posts, or news)
   agent: interviewee
   output_file: output/interview.md
   context:
     - people_background_research_interviewer_task
     - people_background_research_interviewee_task
+    - company_research_task
+
+

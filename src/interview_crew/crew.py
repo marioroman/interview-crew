@@ -23,6 +23,14 @@ class InterviewCrew():
     tasks: List[Task]
 
     @agent
+    def company_research(self) -> Agent:
+        return Agent(
+            config=self.agents_config['company_research'], # type: ignore[index]
+            verbose=True,
+            tools=[web_search_tool, web_scraper],
+        )
+    
+    @agent
     def people_background_research(self) -> Agent:
         return Agent(
             config=self.agents_config['people_background_research'], # type: ignore[index]
@@ -36,6 +44,11 @@ class InterviewCrew():
             config=self.agents_config['interviewee'], # type: ignore[index]
             verbose=True,   
             tools=[web_scraper, preparation_data_tool, web_search_tool],
+        )
+    @task
+    def company_research_task(self) -> Task:
+        return Task(
+            config=self.tasks_config['company_research_task'], # type: ignore[index]
         )
 
     @task
@@ -56,15 +69,16 @@ class InterviewCrew():
             config=self.tasks_config['interviewee_task'], # type: ignore[index]
         )
 
+
     @crew
     def crew(self) -> Crew:
         """Creates the InterviewCrew crew"""
         return Crew(
             agents=self.agents, # Automatically created by the @agent decorator
             tasks=self.tasks, # Automatically created by the @task decorator
-            process=Process.sequential,
+            #process=Process.sequential,
             verbose=True,
             planning=True,
-            #process=Process.hierarchical, # In case you wanna use that instead https://docs.crewai.com/how-to/Hierarchical/
+            process=Process.hierarchical, # In case you wanna use that instead https://docs.crewai.com/how-to/Hierarchical/
             manager_llm=LLM(model="openai/gpt-4o"),
         )
